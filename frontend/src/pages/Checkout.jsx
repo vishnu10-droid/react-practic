@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import OrderSummary from "../OrderSummary";
+import OrderSummary from "../components/OrderSummary";
 import { MapPin, Phone, User, CreditCard, Banknote, Wallet, Lock, CheckCircle2, ChevronRight } from "lucide-react";
 
 export default function Checkout() {

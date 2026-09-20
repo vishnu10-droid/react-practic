@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Search,
   ShoppingCart,
@@ -19,21 +19,33 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
+import { getCategories } from "../store/shopStore";
 
-const CATEGORIES = [
-  { name: "Electronics", icon: "⚡", gradient: "from-violet-500 to-indigo-500" },
-  { name: "Fashion", icon: "👗", gradient: "from-pink-500 to-rose-500" },
-  { name: "Mobiles", icon: "📱", gradient: "from-blue-500 to-cyan-500" },
-  { name: "Beauty", icon: "💄", gradient: "from-fuchsia-500 to-pink-500" },
-  { name: "Shoes", icon: "👟", gradient: "from-orange-500 to-amber-500" },
-  { name: "Home & Kitchen", icon: "🏠", gradient: "from-emerald-500 to-teal-500" },
-];
+const CATEGORY_STYLE = {
+  electronics: { icon: "⚡", gradient: "from-violet-500 to-indigo-500" },
+  fashion: { icon: "👗", gradient: "from-pink-500 to-rose-500" },
+  mobiles: { icon: "📱", gradient: "from-blue-500 to-cyan-500" },
+  beauty: { icon: "💄", gradient: "from-fuchsia-500 to-pink-500" },
+  shoes: { icon: "👟", gradient: "from-orange-500 to-amber-500" },
+  "home-kitchen": { icon: "🏠", gradient: "from-emerald-500 to-teal-500" },
+};
+
+const FALLBACK_STYLE = { icon: "🛍️", gradient: "from-indigo-500 to-fuchsia-500" };
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const { cartItems } = useCart();
   const { wishlist } = useWishlist();
+  const CATEGORIES = useMemo(
+    () =>
+      getCategories().map((c) => ({
+        name: c.name,
+        ...(CATEGORY_STYLE[c.id] || FALLBACK_STYLE),
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [location.pathname]
+  );
   const cartCount = cartItems.reduce((s, i) => s + (i.quantity || 1), 0);
   const wishlistCount = wishlist.length;
 
@@ -266,7 +278,6 @@ export default function Navbar() {
           {/* Desktop second nav */}
           <div className="hidden lg:flex items-center h-[52px] gap-7 border-t border-slate-100">
             <Link to="/home" className={navLink("/home")}><Home size={15} /> Home</Link>
-            <Link to="/dashboard" className={navLink("/dashboard")}><LayoutDashboard size={15} /> Dashboard</Link>
             <Link to="/products" className={navLink("/products")}><LayoutGrid size={15} /> All Products</Link>
             <div className="relative">
               <button onClick={() => setCategoryOpen(!categoryOpen)} className="flex items-center gap-1.5 text-[13.5px] font-semibold text-slate-600 hover:text-indigo-600 transition px-1 py-1">
@@ -323,7 +334,6 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-4 py-4 grid gap-1.5">
               {[
                 { to: "/home", icon: Home, label: "Home" },
-                { to: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
                 { to: "/products", icon: LayoutGrid, label: "All Products" },
                 { to: "/offers", icon: Zap, label: "Hot Deals 🔥" },
                 { to: "/new-arrivals", icon: Sparkles, label: "New Arrivals" },

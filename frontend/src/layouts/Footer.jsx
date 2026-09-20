@@ -1,25 +1,8 @@
 import React from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 import { ShoppingCart, Globe, AtSign, Share2, Play, MapPin, Mail, Phone, ShieldCheck, Truck, RotateCcw } from "lucide-react";
 
-export default function Layout() {
-  const location = useLocation();
-  const hideNavbarRoutes = ["/", "/register", "/dashboard"];
-  const hideChrome = hideNavbarRoutes.includes(location.pathname);
-
-  return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc]">
-      {!hideChrome && <Navbar />}
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      {!hideChrome && <Footer />}
-    </div>
-  );
-}
-
-function Footer() {
+export default function Footer() {
   return (
     <footer className="mt-10">
       {/* trust strip */}
@@ -79,7 +62,7 @@ function Footer() {
             <div>
               <p className="text-white font-extrabold text-[13px] tracking-widest mb-4">ACCOUNT</p>
               <ul className="space-y-2.5 text-[13.5px]">
-                {[["My Profile", "/profile"], ["Dashboard", "/dashboard"], ["My Orders", "/orders"], ["Checkout", "/checkout"], ["Login", "/"], ["Register", "/register"]].map(([l, to]) => (
+                {[["My Profile", "/profile"], ["My Orders", "/orders"], ["Checkout", "/checkout"], ["Login", "/"], ["Register", "/register"]].map(([l, to]) => (
                   <li key={l}><Link to={to} className="hover:text-white transition">{l}</Link></li>
                 ))}
               </ul>

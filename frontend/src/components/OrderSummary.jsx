@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "./context/CartContext";
+import { useCart } from "../context/CartContext";
+import { findCoupon, getCoupons } from "../store/shopStore";
 import { ShieldCheck, Ticket, ArrowRight, Lock } from "lucide-react";
 
 export default function OrderSummary({ checkout = false }) {
   const { cartItems, total } = useCart();
   const [coupon, setCoupon] = useState("");
-  const [applied, setApplied] = useState(false);
+  const [applied, setApplied] = useState(null);
+  const available = useMemo(getCoupons, []);
   const count = cartItems.reduce((s, i) => s + (i.quantity || 1), 0);
   const delivery = total === 0 || total > 499 ? 0 : 49;
-  const discount = applied ? Math.round(total * 0.1) : 0;
+  const discount = applied ? Math.round((total * applied.percent) / 100) : 0;
   const grand = total + delivery - discount;
+
+  const apply = () => {
+    const found = findCoupon(coupon);
+    if (found) {
+      setApplied(found);
+      setCoupon("");
+    } else {
+      alert(available.length ? "Invalid coupon code." : "No active coupons right now.");
+    }
+  };
 
   return (
     <div className="lg:sticky lg:top-32 h-fit">
@@ -27,13 +39,13 @@ export default function OrderSummary({ checkout = false }) {
               <label className="text-[11px] font-extrabold tracking-widest text-slate-400 flex items-center gap-1.5 mb-2"><Ticket size={13} /> HAVE A COUPON?</label>
               {applied ? (
                 <div className="flex items-center justify-between bg-emerald-50 border border-dashed border-emerald-300 rounded-2xl px-4 py-3">
-                  <span className="text-[13px] font-extrabold text-emerald-700">FESTIVE10 applied (−₹{discount.toLocaleString("en-IN")})</span>
-                  <button onClick={() => setApplied(false)} className="text-[12px] font-bold text-slate-400 hover:text-rose-500">Remove</button>
+                  <span className="text-[13px] font-extrabold text-emerald-700">{applied.code} applied (−₹{discount.toLocaleString("en-IN")})</span>
+                  <button onClick={() => setApplied(null)} className="text-[12px] font-bold text-slate-400 hover:text-rose-500">Remove</button>
                 </div>
               ) : (
                 <div className="flex gap-2">
-                  <input value={coupon} onChange={(e) => setCoupon(e.target.value)} placeholder="Try FESTIVE10" className="flex-1 min-w-0 border border-slate-200 bg-slate-50 rounded-xl px-3.5 py-2.5 text-[13px] font-bold uppercase outline-none focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 placeholder:normal-case placeholder:font-medium placeholder:text-slate-400" />
-                  <button onClick={() => coupon.trim().toUpperCase() === "FESTIVE10" ? setApplied(true) : alert("Use code FESTIVE10 for 10% off")} className="px-4 py-2.5 rounded-xl bg-slate-900 text-white text-[12.5px] font-bold hover:bg-gradient-to-r hover:from-indigo-600 hover:to-fuchsia-600 transition active:scale-95">Apply</button>
+                  <input value={coupon} onChange={(e) => setCoupon(e.target.value)} placeholder={available.length ? `Try ${available[0].code}` : "No coupons live"} className="flex-1 min-w-0 border border-slate-200 bg-slate-50 rounded-xl px-3.5 py-2.5 text-[13px] font-bold uppercase outline-none focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 placeholder:normal-case placeholder:font-medium placeholder:text-slate-400" />
+                  <button onClick={apply} className="px-4 py-2.5 rounded-xl bg-slate-900 text-white text-[12.5px] font-bold hover:bg-gradient-to-r hover:from-indigo-600 hover:to-fuchsia-600 transition active:scale-95">Apply</button>
                 </div>
               )}
             </div>

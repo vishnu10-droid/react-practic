@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Heart, ShoppingCart, Star, Zap } from "lucide-react";
-import { useCart } from "./context/CartContext";
-import { useWishlist } from "./context/WishlistContext";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
 
 const badgeStyle = (badge) => {
   if (badge === "Hot") return "bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-[0_6px_16px_-6px_rgb(244_63_94/0.7)]";

@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ShoppingBag, ArrowRight, Trash2 } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import CartItem from "../CartItem";
-import OrderSummary from "../OrderSummary";
+import CartItem from "../components/CartItem";
+import OrderSummary from "../components/OrderSummary";
 
 export default function Cart() {
   const { cartItems, clearCart } = useCart();

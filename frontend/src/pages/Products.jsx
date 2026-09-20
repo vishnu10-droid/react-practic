@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { SearchX, SlidersHorizontal, X, ChevronDown, Star } from "lucide-react";
-import { getProducts, getCategories } from "../../store/shopStore";
-import ProductCard from "../ProductCard";
+import { getProducts, getCategories } from "../store/shopStore";
+import ProductCard from "../components/ProductCard";
 
 export default function Products() {
   const products = useMemo(getProducts, []);

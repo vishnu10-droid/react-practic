@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Truck, ShieldCheck, Headphones, ArrowRight, Star, Zap, Sparkles, BadgeCheck, Quote } from "lucide-react";
-import { getProducts, getCategories, getCoupons } from "../../store/shopStore";
-import ProductCard from "../ProductCard";
-import CategoryCard from "../CategoryCard";
+import { getProducts, getCategories, getCoupons } from "../store/shopStore";
+import ProductCard from "../components/ProductCard";
+import CategoryCard from "../components/CategoryCard";
 
 export default function Home() {
   const products = useMemo(getProducts, []);

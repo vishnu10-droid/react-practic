@@ -1,14 +1,15 @@
 import React, { useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Heart, ShoppingCart, Star, Truck, ShieldCheck, RotateCcw, Zap, ChevronRight, BadgeCheck, Minus, Plus } from "lucide-react";
-import { products } from "../data/products";
+import { getProducts } from "../store/shopStore";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
-import ProductCard from "../ProductCard";
+import ProductCard from "../components/ProductCard";
 
 export default function ProductDetails() {
   const { id } = useParams();
-  const product = products.find((item) => item.id === Number(id));
+  const products = useMemo(getProducts, []);
+  const product = products.find((item) => String(item.id) === String(id));
   const { addToCart } = useCart();
   const { toggleWishlist, isWishlisted } = useWishlist();
   const [qty, setQty] = useState(1);

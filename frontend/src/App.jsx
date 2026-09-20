@@ -1,19 +1,19 @@
 import React from "react";
-import {Route,Routes,BrowserRouter} from 'react-router-dom'
-import Form from "./components/pages/login";
-import Register from "./components/pages/Register";
-import Layout from "./components/layout/Layout";
-import Cart from "./components/pages/Cart";
-import Checkout from "./components/pages/Checkout";
-import NewArrivals from "./components/pages/NewArrivals";
-import Offers from "./components/pages/Offers";
-import Orders from "./components/pages/Orders";
-import ProductDetails from "./components/pages/ProductDetails";
-import Products from "./components/pages/Products";
-import Profile from "./components/pages/Profile";
-import Wishlist from "./components/pages/Wishlist";
-import Dashboard from "./components/pages/Dashboard";
-import Home from "./components/pages/Home";
+import { Route, Routes, BrowserRouter } from 'react-router-dom'
+import Form from "./pages/Login";
+import Register from "./pages/Register";
+import Layout from "./layouts/Layout";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import NewArrivals from "./pages/NewArrivals";
+import Offers from "./pages/Offers";
+import Orders from "./pages/Orders";
+import ProductDetails from "./pages/ProductDetails";
+import Products from "./pages/Products";
+import Profile from "./pages/Profile";
+import Wishlist from "./pages/Wishlist";
+import Dashboard from "./dashboard/Dashboard";
+import Home from "./pages/Home";
 export default function App(){
   return(
 

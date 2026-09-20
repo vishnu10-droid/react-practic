@@ -1,4 +1,4 @@
-import { products as seedProducts, categories as seedCategories } from "../components/data/products.js";
+import { products as seedProducts, categories as seedCategories } from "../data/products.js";
 
 const KEYS = {
   products: "shopkart_admin_products",

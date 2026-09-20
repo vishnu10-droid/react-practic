@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Sparkles, ArrowRight } from "lucide-react";
-import { products } from "../data/products";
-import ProductCard from "../ProductCard";
+import { getProducts } from "../store/shopStore";
+import ProductCard from "../components/ProductCard";
 
 export default function NewArrivals() {
-  const newProducts = products.filter((p) => p.badge === "New" || p.id > 4);
+  const products = useMemo(getProducts, []);
+  const newProducts = products.filter((p) => p.badge === "New");
 
   return (
     <div className="bg-[#f8fafc]">

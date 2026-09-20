@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Heart, ArrowRight } from "lucide-react";
 import { useWishlist } from "../context/WishlistContext";
-import ProductCard from "../ProductCard";
+import ProductCard from "../components/ProductCard";
 
 export default function Wishlist() {
   const { wishlist } = useWishlist();
